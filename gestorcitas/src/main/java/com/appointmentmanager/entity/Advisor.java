@@ -18,6 +18,7 @@ public class Advisor {
     private String name;
     private String specialty;
     private String email;
+    private String documentNumber;
 
     @Enumerated(EnumType.STRING)
     private AdvisorState advisorState;
