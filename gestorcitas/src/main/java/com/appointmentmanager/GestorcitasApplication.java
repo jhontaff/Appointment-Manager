@@ -1,4 +1,4 @@
-package com.gestorcitas;
+package com.appointmentmanager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

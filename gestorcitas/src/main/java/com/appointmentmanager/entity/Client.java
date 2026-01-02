@@ -1,0 +1,32 @@
+package com.appointmentmanager.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@Entity(name = "client")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Client {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String email;
+    private String documentNumber;
+    private LocalDate birthDate;
+
+    @Enumerated(EnumType.STRING)
+    private ClientState clientState;
+
+    @OneToMany(mappedBy = "client")
+    private List<Appointment> appointments;
+
+
+}
