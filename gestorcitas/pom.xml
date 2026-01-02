@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com</groupId>
-	<artifactId>gestorcitas</artifactId>
+	<artifactId>AppointmentManager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>gestorcitas</name>
 	<description>Gestor de citas</description>
