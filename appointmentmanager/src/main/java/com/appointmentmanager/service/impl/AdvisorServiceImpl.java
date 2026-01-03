@@ -6,6 +6,7 @@ import com.appointmentmanager.dto.request.AdvisorUpdateRequest;
 import com.appointmentmanager.dto.response.AdvisorResponse;
 import com.appointmentmanager.entity.Advisor;
 import com.appointmentmanager.exception.BusinessException;
+import com.appointmentmanager.exception.ResourceNotFoundException;
 import com.appointmentmanager.repository.AdvisorRepository;
 import com.appointmentmanager.service.IAdvisorService;
 import org.springframework.stereotype.Service;
@@ -79,20 +80,20 @@ public class AdvisorServiceImpl implements IAdvisorService {
 
     @Override
     public void deleteAdvisor(Long id) {
-        Advisor advisor = advisorRepository.findById(id)
-                .orElseThrow(
-                        () -> new BusinessException("Advisor not found")
-                );
-        advisorRepository.delete(advisor);
+        if (!advisorRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Advisor not found");
+        }
+        advisorRepository.deleteById(id);
     }
 
     @Override
-    public void updateAdvisor(Long id, AdvisorUpdateRequest advisorUpdateRequest) {
+    public AdvisorResponse updateAdvisor(Long id, AdvisorUpdateRequest advisorUpdateRequest) {
         Advisor existingAdvisor = advisorRepository.findById(id)
                 .orElseThrow(
-                        () -> new BusinessException("Advisor not found")
+                        () -> new ResourceNotFoundException("Advisor not found")
                 );
         advisorMapper.updateEntityFromDto(advisorUpdateRequest, existingAdvisor);
-        advisorRepository.save(existingAdvisor);
+        //advisorRepository.save(existingAdvisor);
+        return advisorMapper.toDto(existingAdvisor);
     }
 }

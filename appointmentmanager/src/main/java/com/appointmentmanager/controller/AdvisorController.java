@@ -1,6 +1,7 @@
 package com.appointmentmanager.controller;
 
 import com.appointmentmanager.dto.request.AdvisorCreateRequest;
+import com.appointmentmanager.dto.request.AdvisorUpdateRequest;
 import com.appointmentmanager.dto.response.AdvisorResponse;
 import com.appointmentmanager.service.IAdvisorService;
 import jakarta.validation.Valid;
@@ -33,5 +34,26 @@ public class AdvisorController {
                 ? ResponseEntity.noContent().build() //204 No Content
                 : ResponseEntity.ok(advisors); //200 OK with a list of advisors
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AdvisorResponse> getAdvisorById(@PathVariable Long id) {
+        return ResponseEntity.ok(advisorService.getAdvisorById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AdvisorResponse> updateAdvisor(
+            @PathVariable Long id,
+            @Valid @RequestBody AdvisorUpdateRequest  advisorUpdateRequest) {
+        return ResponseEntity.ok(advisorService.updateAdvisor(id, advisorUpdateRequest));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAdvisor(@PathVariable Long id) {
+        advisorService.deleteAdvisor(id);
+    }
+
+
+
 
 }

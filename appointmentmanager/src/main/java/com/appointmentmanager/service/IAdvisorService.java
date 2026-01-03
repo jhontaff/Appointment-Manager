@@ -13,5 +13,5 @@ public interface IAdvisorService {
     public AdvisorResponse getAdvisorById(Long id);
     public AdvisorResponse createAdvisor(AdvisorCreateRequest advisor);
     public void deleteAdvisor(Long id);
-    public void updateAdvisor(Long id, AdvisorUpdateRequest advisorUpdateRequest);
+    public AdvisorResponse updateAdvisor(Long id, AdvisorUpdateRequest advisorUpdateRequest);
 }
