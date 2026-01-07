@@ -1,16 +1,14 @@
 package com.appointmentmanager.dto.request;
 
 import com.appointmentmanager.entity.AdvisorState;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class AdvisorUpdateRequest {
 
     @NotBlank
@@ -27,5 +25,6 @@ public class AdvisorUpdateRequest {
     @Size(min=5, max=15, message="document number must be between 5 and 15 characters")
     private String documentNumber;
 
+    @Enumerated(EnumType.STRING)
     private AdvisorState advisorState;
 }

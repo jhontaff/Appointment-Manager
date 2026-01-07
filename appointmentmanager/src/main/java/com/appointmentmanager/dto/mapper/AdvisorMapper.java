@@ -4,6 +4,7 @@ import com.appointmentmanager.dto.request.AdvisorCreateRequest;
 import com.appointmentmanager.dto.request.AdvisorUpdateRequest;
 import com.appointmentmanager.dto.response.AdvisorResponse;
 import com.appointmentmanager.entity.Advisor;
+import com.appointmentmanager.entity.AdvisorState;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -15,10 +16,14 @@ public interface AdvisorMapper {
     @Mapping(target = "appointments", ignore = true)
     Advisor toEntity(AdvisorCreateRequest dto);
 
+    @Mapping(target = "advisorState", source = "advisorState")
     void updateEntityFromDto(
             AdvisorUpdateRequest dto,
             @MappingTarget Advisor entity
     );
 
+    @Mapping(target = "advisorState", source = "advisorState")
     AdvisorResponse toDto(Advisor entity);
+
+
 }
