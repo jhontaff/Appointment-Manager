@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
-    Optional<Client> findByDocument(String document);
+    Optional<Client> findByDocumentNumber(String documentNumber);
 
     List<Client> findByNameContainingIgnoreCase(String name);
 }

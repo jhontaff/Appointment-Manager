@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface AdvisorRepository extends JpaRepository<Advisor, Long> {
-    Optional<Advisor> findByDocument(String document);
+    Optional<Advisor> findByDocumentNumber(String documentNumber);
 
     List<Advisor> findByNameContainingIgnoreCase(String name);
 }

@@ -5,6 +5,7 @@ import com.appointmentmanager.dto.request.AdvisorCreateRequest;
 import com.appointmentmanager.dto.request.AdvisorUpdateRequest;
 import com.appointmentmanager.dto.response.AdvisorResponse;
 import com.appointmentmanager.entity.Advisor;
+import com.appointmentmanager.entity.AdvisorState;
 import com.appointmentmanager.exception.BusinessException;
 import com.appointmentmanager.exception.ResourceNotFoundException;
 import com.appointmentmanager.repository.AdvisorRepository;
@@ -35,7 +36,7 @@ public class AdvisorServiceImpl implements IAdvisorService {
         List<Advisor> advisors;
         if(document != null && !document.isEmpty()) {
              advisors =List.of(
-                advisorRepository.findByDocument(document)
+                advisorRepository.findByDocumentNumber(document)
                         .orElseThrow(
                                 () -> new BusinessException("Advisor with document " + document + " not found")
                         )
@@ -61,21 +62,29 @@ public class AdvisorServiceImpl implements IAdvisorService {
     @Override
     public AdvisorResponse createAdvisor(AdvisorCreateRequest advisorCreateRequest) {
         Advisor advisor = advisorMapper.toEntity(advisorCreateRequest);
-        if (isAdvisorValidToCreate(advisor)) {
-            advisorRepository.save(advisor);
-            return advisorMapper.toDto(advisor);
-        }
-        throw new BusinessException("Advisor could not be created");
+
+        validateAdvisorDoesNotExist(advisorCreateRequest.getDocumentNumber());
+        advisorRepository.save(advisor);
+        return advisorMapper.toDto(advisor);
+
     }
 
-    private boolean isAdvisorValidToCreate(Advisor advisor) {
-        if (advisor.getDocumentNumber() == null || advisor.getDocumentNumber().isEmpty()) {
-            throw new BusinessException("Document is required");
+    private void validateAdvisorDoesNotExist(String documentNumber) {
+        if (advisorRepository.findByDocumentNumber(documentNumber).isPresent()) {
+            throw new BusinessException(
+                    "Advisor with document number " + documentNumber + " already exists"
+            );
         }
-        if (advisorRepository.findByDocument(advisor.getDocumentNumber()).isPresent()) {
-            throw new BusinessException("Advisor with document " + advisor.getDocumentNumber() + " already exists");
+    }
+
+
+    private boolean isAdvisorStateValid(AdvisorCreateRequest advisorCreateRequest) {
+        try{
+            AdvisorState.valueOf(advisorCreateRequest.getAdvisorState().name());
+            return true;
+        } catch (IllegalArgumentException e) {
+            throw new BusinessException("Invalid advisor state: " + advisorCreateRequest.getAdvisorState());
         }
-        return true;
     }
 
     @Override

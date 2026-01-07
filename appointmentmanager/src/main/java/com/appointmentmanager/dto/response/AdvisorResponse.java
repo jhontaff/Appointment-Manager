@@ -1,6 +1,8 @@
 package com.appointmentmanager.dto.response;
 
 import com.appointmentmanager.entity.AdvisorState;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 import java.util.List;
@@ -13,7 +15,8 @@ public class AdvisorResponse {
     private String email;
     private String specialty;
     private String documentNumber;
-    private AdvisorState state;
+    @Enumerated(EnumType.STRING)
+    private AdvisorState advisorState;
     private List<AppointmentResponse> appointments;
 
 }

@@ -11,5 +11,5 @@ import java.util.List;
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
     List<Appointment> findByClientId(Long clientId);
     List<Appointment> findByAdvisorId(Long advisorId);
-    List<Appointment> findByDate(LocalDate date);
+    List<Appointment> findByAppointmentDate(LocalDate date);
 }
