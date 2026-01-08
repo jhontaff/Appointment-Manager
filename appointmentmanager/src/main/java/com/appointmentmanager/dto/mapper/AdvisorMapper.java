@@ -4,7 +4,6 @@ import com.appointmentmanager.dto.request.AdvisorCreateRequest;
 import com.appointmentmanager.dto.request.AdvisorUpdateRequest;
 import com.appointmentmanager.dto.response.AdvisorResponse;
 import com.appointmentmanager.entity.Advisor;
-import com.appointmentmanager.entity.AdvisorState;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
