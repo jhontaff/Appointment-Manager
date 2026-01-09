@@ -46,8 +46,21 @@ public class ClientServiceImpl implements IClientService {
     }
 
     @Override
-    public ClientResponse createClient(ClientCreateRequest client) {
-        return null;
+    public ClientResponse createClient(ClientCreateRequest clientCreateRequest) {
+        Client client = clientMapper.toEntity(clientCreateRequest);
+
+        this.validateClientDoesNotExist(clientCreateRequest.getDocumentNumber());
+        this.clientRepository.save(client);
+
+        return clientMapper.toDto(client);
+    }
+
+    private void validateClientDoesNotExist(String documentNumber) {
+        if (clientRepository.findByDocumentNumber(documentNumber).isPresent()) {
+            throw new BusinessException(
+                    "Client with document number " + documentNumber + " already exists"
+            );
+        }
     }
 
     @Override
@@ -57,6 +70,7 @@ public class ClientServiceImpl implements IClientService {
         }
         clientRepository.deleteById(id);
     }
+
 
     @Override
     public ClientResponse updateClient(Long id, ClientUpdateRequest clientUpdateRequest) {
