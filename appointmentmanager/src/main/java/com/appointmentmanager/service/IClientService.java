@@ -1,16 +1,17 @@
 package com.appointmentmanager.service;
 
+import com.appointmentmanager.dto.request.ClientCreateRequest;
 import com.appointmentmanager.dto.request.ClientUpdateRequest;
-import com.appointmentmanager.entity.Client;
+import com.appointmentmanager.dto.response.ClientResponse;
 
 import java.util.List;
 
 public interface IClientService {
 
-    public List<Client> getClients();
-    public List<Client> searchClient(String document, String name);
-    public Client getClientById(Long id);
-    public Client createClient(Client client);
+    public List<ClientResponse> getClients();
+    public List<ClientResponse> searchClient(String document, String name);
+    public ClientResponse getClientById(Long id);
+    public ClientResponse createClient(ClientCreateRequest client);
     public void deleteClient(Long id);
-    public void updateClient(Long id, ClientUpdateRequest client);
+    public ClientResponse updateClient(Long id, ClientUpdateRequest client);
 }
