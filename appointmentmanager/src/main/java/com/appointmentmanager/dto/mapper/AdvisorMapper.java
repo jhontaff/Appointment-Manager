@@ -15,10 +15,14 @@ public interface AdvisorMapper {
     @Mapping(target = "appointments", ignore = true)
     Advisor toEntity(AdvisorCreateRequest dto);
 
+    @Mapping(target = "advisorState", source = "advisorState")
     void updateEntityFromDto(
             AdvisorUpdateRequest dto,
             @MappingTarget Advisor entity
     );
 
+    @Mapping(target = "advisorState", source = "advisorState")
     AdvisorResponse toDto(Advisor entity);
+
+
 }

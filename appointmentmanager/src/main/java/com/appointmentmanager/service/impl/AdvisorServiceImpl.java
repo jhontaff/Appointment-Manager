@@ -5,7 +5,6 @@ import com.appointmentmanager.dto.request.AdvisorCreateRequest;
 import com.appointmentmanager.dto.request.AdvisorUpdateRequest;
 import com.appointmentmanager.dto.response.AdvisorResponse;
 import com.appointmentmanager.entity.Advisor;
-import com.appointmentmanager.entity.AdvisorState;
 import com.appointmentmanager.exception.BusinessException;
 import com.appointmentmanager.exception.ResourceNotFoundException;
 import com.appointmentmanager.repository.AdvisorRepository;
@@ -65,6 +64,7 @@ public class AdvisorServiceImpl implements IAdvisorService {
 
         validateAdvisorDoesNotExist(advisorCreateRequest.getDocumentNumber());
         advisorRepository.save(advisor);
+
         return advisorMapper.toDto(advisor);
 
     }
@@ -74,16 +74,6 @@ public class AdvisorServiceImpl implements IAdvisorService {
             throw new BusinessException(
                     "Advisor with document number " + documentNumber + " already exists"
             );
-        }
-    }
-
-
-    private boolean isAdvisorStateValid(AdvisorCreateRequest advisorCreateRequest) {
-        try{
-            AdvisorState.valueOf(advisorCreateRequest.getAdvisorState().name());
-            return true;
-        } catch (IllegalArgumentException e) {
-            throw new BusinessException("Invalid advisor state: " + advisorCreateRequest.getAdvisorState());
         }
     }
 
@@ -102,7 +92,7 @@ public class AdvisorServiceImpl implements IAdvisorService {
                         () -> new ResourceNotFoundException("Advisor not found")
                 );
         advisorMapper.updateEntityFromDto(advisorUpdateRequest, existingAdvisor);
-        //advisorRepository.save(existingAdvisor);
-        return advisorMapper.toDto(existingAdvisor);
+        Advisor savedAdvisor = advisorRepository.save(existingAdvisor);
+        return advisorMapper.toDto(savedAdvisor);
     }
 }
