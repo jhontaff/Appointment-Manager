@@ -1,5 +1,7 @@
 package com.appointmentmanager.service;
 
+import com.appointmentmanager.dto.request.AppointmentRequest;
+import com.appointmentmanager.dto.response.AppointmentResponse;
 import com.appointmentmanager.entity.Appointment;
 
 import java.time.LocalDate;
@@ -7,12 +9,12 @@ import java.util.List;
 
 public interface IAppointmentService {
 
-    public List<Appointment> getAppointments();
-    public List<Appointment> getAppointmentByAdvisorId(Long id);
-    public List<Appointment> getAppointmentByClientId(Long id);
-    public List<Appointment> getAppointmentByDate(LocalDate date);
-    public Appointment createAppointment(Appointment appointment);
+    public List<AppointmentResponse> getAppointments();
+    public List<AppointmentResponse> getAppointmentByAdvisorId(Long id);
+    public List<AppointmentResponse> getAppointmentByClientId(Long id);
+    public List<AppointmentResponse> getAppointmentByDate(LocalDate date);
+    public AppointmentResponse createAppointment(AppointmentRequest appointmentRequest);
     public void deleteAppointment(Long id);
-    public void updateAppointment(Long id, Appointment appointment);
+    public AppointmentResponse updateAppointment(Long id, AppointmentRequest appointmentRequest);
 
 }

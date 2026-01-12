@@ -16,6 +16,7 @@ public interface ClientMapper {
     @Mapping(target = "clientState", constant = "ACTIVATION_PENDING")
     Client toEntity(ClientCreateRequest dto);
 
+    @Mapping(target = "id", source = "id")
     @Mapping(target = "clientState", source = "clientState")
     ClientResponse toDto(Client client);
 

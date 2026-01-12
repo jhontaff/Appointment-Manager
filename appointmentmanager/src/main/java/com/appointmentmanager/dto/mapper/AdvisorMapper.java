@@ -21,6 +21,7 @@ public interface AdvisorMapper {
             @MappingTarget Advisor entity
     );
 
+
     @Mapping(target = "advisorState", source = "advisorState")
     AdvisorResponse toDto(Advisor entity);
 
